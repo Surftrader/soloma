@@ -1,0 +1,378 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+    /* --- СТИЛІ СТОРІНКИ CUSTOMER CARE --- */
+    .care-container {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    .care-header {
+        margin-bottom: 24px;
+        text-align: left;
+    }
+
+    .care-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 24px;
+        color: #403B3B;
+        /* Deep Umbra */
+        margin: 0 0 6px 0;
+        font-weight: normal;
+        letter-spacing: 0.02em;
+    }
+
+    .care-subtitle {
+        font-size: 12px;
+        color: #706867;
+        /* Umbra */
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Рядок текстових табів з підкресленням активного за ТЗ */
+    .care-tabs-nav {
+        display: flex;
+        gap: 20px;
+        border-bottom: 1px solid #E0E0DB;
+        padding-bottom: 10px;
+        margin-top: 24px;
+        margin-bottom: 16px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+    }
+
+    .care-tab-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #706867;
+        cursor: pointer;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .care-tab-btn.active {
+        color: #403B3B;
+    }
+
+    /* Тонка лінія підкреслення активного таба */
+    .care-tab-btn.active::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -11px;
+        width: 100%;
+        height: 1px;
+        background-color: #403B3B;
+    }
+
+    /* Обертки для контенту табів */
+    .care-tab-content {
+        display: none;
+        /* Сховано за замовчуванням */
+    }
+
+    .care-tab-content.active {
+        display: block;
+        /* Відображається лише активний */
+    }
+
+    /* Конструкція акордеонів */
+    .care-accordion-item {
+        border-bottom: 1px solid #E0E0DB;
+    }
+
+    .care-accordion-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 16px 0;
+        text-align: left;
+        font-size: 13px;
+        color: #403B3B;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: normal;
+    }
+
+    .care-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        font-size: 12px;
+        color: #706867;
+        line-height: 1.5;
+    }
+
+    .care-accordion-inner {
+        padding-bottom: 16px;
+        padding-left: 18px;
+        /* Strict 18px left padding inheritance from your fix */
+    }
+
+    /* Блок примітки для Shipping табу */
+    .shipping-note-line {
+        font-size: 12px;
+        color: #706867;
+        margin-top: 20px;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    /* Текст зв'язку внизу кожного таба */
+    .care-footer-note {
+        margin-top: 32px;
+        text-align: left;
+        font-size: 12px;
+        color: #706867;
+    }
+
+    .care-footer-note a {
+        color: #403B3B;
+        font-weight: 500;
+        text-decoration: underline;
+        display: block;
+        margin-top: 4px;
+    }
+
+    /* --- DESKTOP ADAPTIVE OVERRIDES --- */
+    @media (min-width: 768px) {
+        .care-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .care-title {
+            font-size: 32px;
+        }
+
+        .care-tabs-nav {
+            gap: 32px;
+            font-size: 13px;
+        }
+
+        .care-tab-btn {
+            font-size: 13px;
+        }
+    }
+</style>
+
+<div class="care-container">
+
+    <!-- Верхній блок інформації -->
+    <header class="care-header">
+        <h1 class="care-title">Customer Care</h1>
+        <p class="care-subtitle">Shipping, returns, and answers to common questions — all in one place.</p>
+    </header>
+
+    <!-- Текстова навігація табами строго за макетом -->
+    <div class="care-tabs-nav">
+        <button class="care-tab-btn active" onclick="switchTab(event, 'tab-faq')">FAQ</button>
+        <button class="care-tab-btn" onclick="switchTab(event, 'tab-shipping')">Shipping & Returns</button>
+        <button class="care-tab-btn" onclick="switchTab(event, 'tab-privacy')">Privacy</button>
+    </div>
+
+    <!-- === ТАБ 1: FAQ (Скріншоти 1 та 2) === -->
+    <div id="tab-faq" class="care-tab-content active">
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>How do I place an order?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Browse Shop, select size and color, and add to cart. Review your items and check out securely.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>What payment methods do you accept?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Major credit and debit cards, plus PayPal at checkout. All transactions are encrypted.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>Can I modify or cancel my order?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Email orders@soloma.com as soon as possible — we can help within a short window before processing
+                    begins.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>How do I track my order?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    You'll get a confirmation email with tracking as soon as your order ships.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>How do I care for my garments?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Follow the care label. Cashmere and silk generally prefer hand washing or dry cleaning; linen and
+                    cotton can go on a gentle cycle, laid flat to dry.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-footer-note">
+            <span>Still have a question?</span>
+            <a href="/contact/">Contact our team</a>
+        </div>
+    </div>
+
+    <!-- === ТАБ 2: SHIPPING & RETURNS (Скріншот 3) === -->
+    <div id="tab-shipping" class="care-tab-content">
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>What's your return policy?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Unworn, unwashed items with tags attached can be returned within 30 days. Start a return via the
+                    Returns Portal in your confirmation email, or contact support@soloma.com.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>How long does shipping take?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Standard shipping is 5–7 business days. Expedited options are available at checkout. Fees vary by
+                    location and method.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>Are all items eligible for return?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Personalized or final sale items are not eligible for returns or exchanges.
+                </div>
+            </div>
+        </div>
+
+        <!-- Текстова примітка без сірих блоків чи маржинів за ТЗ -->
+        <p class="shipping-note-line">
+            30-day returns on every order — refunded to your original payment method once inspected.
+        </p>
+
+        <div class="care-footer-note">
+            <span>Still have a question?</span>
+            <a href="/contact/">Contact our team</a>
+        </div>
+    </div>
+
+    <!-- === ТАБ 3: PRIVACY (Скріншот 4) === -->
+    <div id="tab-privacy" class="care-tab-content">
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>What information do you collect?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    Information you provide when registering, contacting us, or using site features — used to
+                    personalize your experience and process orders.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-accordion-item">
+            <button class="care-accordion-trigger" onclick="toggleCareAccordion(this)">
+                <span>Do you sell my data?</span> <span>+</span>
+            </button>
+            <div class="care-accordion-content">
+                <div class="care-accordion-inner">
+                    No. We don't sell or trade personal information, except with trusted partners who help operate the
+                    site under confidentiality agreements.
+                </div>
+            </div>
+        </div>
+
+        <div class="care-footer-note">
+            <span>Still have a question?</span>
+            <a href="/contact/">Contact our team</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Функция переключения табов (FAQ / Shipping / Privacy)
+    function switchTab(event, tabId) {
+        var contents = document.querySelectorAll('.care-tab-content');
+        contents.forEach(function (content) {
+            content.classList.remove('active');
+        });
+
+        var buttons = document.querySelectorAll('.care-tab-btn');
+        buttons.forEach(function (btn) {
+            btn.classList.remove('active');
+        });
+
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        // Закрываем все аккордеоны при смене таба для аккуратности UX
+        var allAccordionContents = document.querySelectorAll('.care-accordion-content');
+        var allIcons = document.querySelectorAll('.care-accordion-trigger span:last-child');
+        allAccordionContents.forEach(function (item) {item.style.maxHeight = "0px";});
+        allIcons.forEach(function (item) {item.textContent = "+";});
+    }
+
+    // Логика открытия/закрытия аккордеонов внутри табов
+    function toggleCareAccordion(element) {
+        var content = element.nextElementSibling;
+        var icon = element.querySelector('span:last-child');
+
+        if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+            content.style.maxHeight = "0px";
+            icon.textContent = "+";
+        } else {
+            // Закрываем соседние вопросы внутри текущего активного таба
+            var currentTab = element.closest('.care-tab-content');
+            var siblings = currentTab.querySelectorAll('.care-accordion-content');
+            var siblingIcons = currentTab.querySelectorAll('.care-accordion-trigger span:last-child');
+
+            siblings.forEach(function (item) {item.style.maxHeight = "0px";});
+            siblingIcons.forEach(function (item) {item.textContent = "+";});
+
+            // Открываем выбранный вопрос
+            content.style.maxHeight = content.scrollHeight + "px";
+            icon.textContent = "×"; /* Хрестик для открытого состояния по макету */
+        }
+    }
+</script>
+{% endblock %}

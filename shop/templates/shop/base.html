@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Soloma</title>
+        <style>
+            /* --- BRAND BOOK BRAND CONSTANTS --- */
+            body {
+                background-color: #F4F2EF;
+                /* Shovk основной кремовый фон везде */
+                color: #403B3B;
+                /* Deep Umbra primary text */
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .site-wrapper {
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .container-fluid {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+
+            /* --- HEADER NAVIGATION --- */
+            header {
+                background-color: #F4F2EF;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            .header-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 0;
+            }
+
+            .logo {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+                text-transform: uppercase;
+                letter-spacing: 0.2em;
+                color: #403B3B;
+                text-decoration: none;
+                font-weight: normal;
+            }
+
+            .nav-actions {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .icon-btn {
+                background: none;
+                border: none;
+                font-size: 18px;
+                color: #403B3B;
+                cursor: pointer;
+                padding: 0;
+                text-decoration: none;
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+
+            .bag-badge {
+                position: absolute;
+                top: -5px;
+                right: -8px;
+                background-color: #C39C7F;
+                /* Window Lights */
+                color: white;
+                font-size: 8px;
+                font-weight: bold;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* --- BURGER OVERLAY MENU SCREEN (Новый блок по макету) --- */
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: #F4F2EF;
+                /* Цвет Shovk как на макете */
+                z-index: 1000;
+                display: none;
+                /* Скрыто по умолчанию */
+                flex-direction: column;
+                box-sizing: border-box;
+            }
+
+            .menu-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 20px;
+                max-width: 1200px;
+                width: 100%;
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+
+            .menu-content {
+                max-width: 1200px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 40px 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            /* Главные ссылки (Times New Roman) */
+            .primary-links {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .primary-links a {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 28px;
+                color: #403B3B;
+                text-decoration: none;
+                letter-spacing: 0.02em;
+            }
+
+            /* Разделительная линия как на макете */
+            .menu-divider {
+                height: 1px;
+                background-color: #E0E0DB;
+                width: 100%;
+            }
+
+            /* Второстепенные ссылки (Jost) */
+            .secondary-links {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .secondary-links a {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                font-size: 13px;
+                color: #706867;
+                /* Цвет Umbra */
+                text-decoration: none;
+                letter-spacing: 0.05em;
+            }
+
+            /* --- MAIN CONTENT TARGET --- */
+            main {
+                flex: 1;
+                width: 100%;
+            }
+
+            /* --- FOOTER ARCHITECTURE --- */
+            footer {
+                background-color: #F4F2EF;
+                padding: 60px 0 40px 0;
+                border-top: 1px solid #E0E0DB;
+                font-size: 12px;
+            }
+
+            .footer-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .footer-title {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 16px;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                margin-bottom: 12px;
+            }
+
+            .newsletter-form {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #403B3B;
+                padding-bottom: 4px;
+                max-width: 400px;
+            }
+
+            .newsletter-input {
+                background: none;
+                border: none;
+                outline: none;
+                font-size: 13px;
+                color: #403B3B;
+                width: 100%;
+            }
+
+            .newsletter-submit {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                color: #403B3B;
+            }
+
+            .address-text {
+                color: #706867;
+                font-size: 11px;
+                margin-top: 10px;
+            }
+
+            .footer-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                text-transform: uppercase;
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: 0.1em;
+            }
+
+            .footer-links a {
+                color: #403B3B;
+                text-decoration: none;
+            }
+
+            .copyright {
+                color: #706867;
+                font-size: 10px;
+                margin-top: 10px;
+            }
+
+            /* --- DESKTOP ADAPTIVE STYLES --- */
+            @media (min-width: 768px) {
+                .header-inner {
+                    padding: 24px 0;
+                }
+
+                .logo {
+                    font-size: 24px;
+                }
+
+                .footer-grid {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                }
+
+                .footer-block-main {
+                    flex: 2;
+                }
+
+                .footer-block-links {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    text-align: right;
+                }
+
+                .footer-links {
+                    justify-content: flex-end;
+                    gap: 25px;
+                }
+
+                /* На больших экранах увеличиваем шрифт меню */
+                .primary-links a {
+                    font-size: 36px;
+                }
+
+                .secondary-links a {
+                    font-size: 15px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- ✕ ПОЛНОЭКРАННОЕ БУРГЕР-МЕНЮ (Копия вашего макета) ✕ -->
+        <div id="burgerMenu" class="menu-overlay">
+            <div class="menu-header">
+                <span class="logo">Soloma</span>
+                <!-- Кнопка-крестик для закрытия -->
+                <button onclick="toggleMenu()" class="icon-btn"
+                    style="font-size: 22px; font-family: 'Times New Roman', serif;">✕</button>
+            </div>
+            <div class="menu-content">
+                <!-- Главный блок ссылок -->
+                <div class="primary-links">
+                    <a href="/">Home</a>
+                    <a href="/shop/">Shop</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                </div>
+
+                <!-- Тонкая линия разделителя -->
+                <div class="menu-divider"></div>
+
+                <!-- Второстепенный блок ссылок -->
+                <div class="secondary-links">
+                    <a href="{% url 'shop:customer_care' %}">Customer Care</a>
+                    <a href="{% url 'shop:journal_index' %}">Journal</a>
+                    <a href="https://instagram.com" target="_blank">Instagram</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="site-wrapper">
+
+            <!-- Header Nav -->
+            <header>
+                <div class="container-fluid">
+                    <div class="header-inner">
+                        <a href="/" class="logo">Soloma</a>
+                        <div class="nav-actions">
+                            <button class="icon-btn">⌕</button>
+                            <a href="/cart/" class="icon-btn">
+                                👜
+                                <span class="bag-badge">2</span>
+                            </a>
+                            <!-- Кнопка открытия меню, вызывает функцию toggleMenu() -->
+                            <button onclick="toggleMenu()" class="icon-btn"
+                                style="font-size: 20px; padding-left: 2px;">☰</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Dynamic Content -->
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+
+            <!-- Footer -->
+            <footer>
+                <div class="container-fluid">
+                    <div class="footer-grid">
+
+                        <div class="footer-block-main">
+                            <div class="footer-title">Sign up for the latest news.</div>
+                            <form action="/newsletter-signup/" method="POST" class="newsletter-form">
+                                {% csrf_token %}
+                                <input type="email" name="email" placeholder="Email address" class="newsletter-input">
+                                <button type="submit" class="newsletter-submit">➔</button>
+                            </form>
+                            <div class="address-text">123 Fashion Ave, Toronto ON M5V 2L9, Canada</div>
+                        </div>
+
+                        <div class="footer-block-links">
+                            <div class="footer-links">
+                                <a href="{% url 'shop:catalog' %}">Shop</a>
+                                <a href="{% url 'shop:customer_care' %}">Customer Care</a>
+                                <a href="/faq/">FAQ</a>
+                                <a href="/contact/">Contact</a>
+                                <a href="https://instagram.com">Instagram</a>
+                                <a href="{% url 'shop:journal_index' %}">Journal</a>
+                            </div>
+                            <div class="copyright">© 2026 Soloma Inc.</div>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+        <script>
+            function toggleMenu() {
+                var menu = document.getElementById("burgerMenu");
+                if (menu.style.display === "flex") {
+                    menu.style.display = "none";
+                    document.body.style.overflow = "auto"; // Включаем прокрутку страницы обратно
+                } else {
+                    menu.style.display = "flex";
+                    document.body.style.overflow = "hidden"; // Отключаем прокрутку заднего фона при открытом меню
+                }
+            }
+        </script>
+    </body>
+
+</html>

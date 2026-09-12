@@ -1,0 +1,490 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+    /* --- COMMON MOBILE STYLES (Default layout) --- */
+    .promo-strip {
+        background-color: #E0E0DB;
+        /* Novvy Misyats */
+        color: #403B3B;
+        text-align: center;
+        padding: 10px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 500;
+        border-bottom: 1px solid #E0E0DB;
+    }
+
+    .content-block {
+        margin-bottom: 50px;
+    }
+
+    /* Hero Banner Mobile */
+    .hero-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        background-color: #E0E0DB;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        background-image: url('https://unsplash.com');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .hero-btn {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #F4F2EF;
+        color: #403B3B;
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-tagline {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        line-height: 1.4;
+        margin: 20px 0 0 0;
+        font-weight: normal;
+    }
+
+    /* Скролл коллекций на мобильном */
+    .section-title {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 11px;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    .section-title span {
+        color: #706867;
+        font-weight: normal;
+    }
+
+    .scroll-row {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 10px;
+    }
+
+    .scroll-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .product-card-scroll {
+        width: 46%;
+        flex-shrink: 0;
+    }
+
+    .product-image-placeholder {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background-color: #706867;
+        border-radius: 2px;
+    }
+
+    .p-title {
+        font-size: 12px;
+        margin: 6px 0 2px 0;
+        font-weight: 500;
+    }
+
+    .p-desc {
+        font-size: 10px;
+        color: #706867;
+        margin: 0;
+    }
+
+    .p-price {
+        font-size: 12px;
+        font-weight: 500;
+        margin: 4px 0 0 0;
+    }
+
+    /* Журнальная цитата */
+    .quote-block {
+        background-color: #E0E0DB;
+        padding: 30px 20px;
+        border-top: 1px solid #E0E0DB;
+        border-bottom: 1px solid #E0E0DB;
+        margin-bottom: 50px;
+    }
+
+    .quote-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .quote-eyebrow {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #706867;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .quote-text {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Карточки How to Style It */
+    .style-card {
+        width: 78%;
+        flex-shrink: 0;
+        background-color: white;
+        border: 1px solid #E0E0DB;
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 230px;
+    }
+
+    .style-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 8px;
+    }
+
+    .style-name {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0;
+    }
+
+    .style-mood {
+        font-size: 9px;
+        color: #706867;
+        text-transform: uppercase;
+    }
+
+    .style-desc {
+        font-size: 11px;
+        color: #706867;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    .color-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 12px;
+    }
+
+    .color-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .color-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid #E0E0DB;
+    }
+
+    .color-label {
+        font-size: 9px;
+        text-transform: uppercase;
+        color: #706867;
+    }
+
+    .style-link {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #403B3B;
+        text-decoration: underline;
+        margin-top: 15px;
+        display: block;
+    }
+
+    /* Core Collection Grid */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .grid-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        border-bottom: 1px solid #E0E0DB;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    .grid-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .grid-link {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #706867;
+        text-decoration: underline;
+    }
+
+    /* Инфо-раздел */
+    .info-section {
+        border-top: 1px solid #E0E0DB;
+        padding-top: 25px;
+        margin-bottom: 40px;
+    }
+
+    .info-eyebrow {
+        font-size: 9px;
+        text-transform: uppercase;
+        color: #706867;
+        margin-bottom: 4px;
+        font-weight: 500;
+    }
+
+    .info-text {
+        font-size: 12px;
+        color: #706867;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .info-link {
+        color: #403B3B;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    /* --- ADAPTIVE DESKTOP OVERRIDES (Экраны больше 768px) --- */
+    @media (min-width: 768px) {
+        .content-block {
+            margin-bottom: 70px;
+        }
+
+        /* Десктопный изящный баннер */
+        .hero-container {
+            aspect-ratio: auto;
+            height: 55vh;
+            /* Фиксированная высота баннера на ПК, чтобы не растягивался огромным прямоугольником */
+        }
+
+        .hero-tagline {
+            font-size: 26px;
+            /* Крупнее и благороднее на мониторе */
+            margin-top: 24px;
+        }
+
+        /* Вместо мобильного свайпа — полноценные 4 колонки в ряд на ПК */
+        .scroll-row {
+            overflow-x: visible;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            /* 3 карточки стилей или микро-коллекций в ряд */
+            gap: 25px;
+        }
+
+        .product-card-scroll {
+            width: 100%;
+            /* Убираем фиксированные мобильные проценты */
+        }
+
+        .style-card {
+            width: 100%;
+            min-height: 250px;
+        }
+
+        /* Базовая коллекция на ПК выстраивается в 4 колонки */
+        .grid-2 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-title {
+            font-size: 22px;
+        }
+
+        /* Инфо-панели внизу выстраиваются в аккуратную строчку side-by-side */
+        .bottom-info-container {
+            display: flex;
+            gap: 50px;
+            border-top: 1px solid #E0E0DB;
+            padding-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info-section {
+            border-top: none;
+            padding-top: 0;
+            margin-bottom: 0;
+            flex: 1;
+        }
+    }
+</style>
+
+<!-- Промо-лента верхняя -->
+<div class="promo-strip">
+    20% OFF your first order — join the Soloma family
+</div>
+
+<div class="container-fluid" style="margin-top: 20px;">
+
+    <!-- 1. HERO MAIN SECTION -->
+    <div class="content-block">
+        <div class="hero-container">
+            <div class="hero-image"></div>
+            <a href="{% url 'shop:catalog' %}" class="hero-btn">Shop New Arrivals</a>
+        </div>
+        <h1 class="hero-tagline">
+            Tell the story. Wear the story.<br>Be the story.
+        </h1>
+    </div>
+
+    <!-- 2. CASHMERE COLLECTION CAROUSEL / GRID -->
+    <div class="content-block">
+        <div class="section-title">
+            The Cashmere Story, <span>woven in Mongolia</span>
+        </div>
+        <div class="scroll-row">
+            <div class="product-card-scroll">
+                <div class="product-image-placeholder"></div>
+                <p class="p-title">Cashmere Turtleneck</p>
+                <p class="p-desc">Ultra-soft, refined</p>
+                <p class="p-price">$250</p>
+            </div>
+            <div class="product-card-scroll">
+                <div class="product-image-placeholder"></div>
+                <p class="p-title">Cashmere Wrap Cardigan</p>
+                <p class="p-desc">Effortless layering</p>
+                <p class="p-price">$310</p>
+            </div>
+            <div class="product-card-scroll">
+                <div class="product-image-placeholder"></div>
+                <p class="p-title">Cashmere Scarf</p>
+                <p class="p-desc">Featherweight weave</p>
+                <p class="p-price">$145</p>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- Закрываем контейнер перед полноэкранной цитатой -->
+
+<!-- 3. EDITORIAL TEXT ROW (Full bleed zone) -->
+<div class="quote-block">
+    <div class="quote-inner">
+        <p class="quote-eyebrow">The Soloma Woman</p>
+        <p class="quote-text">
+            Timeless elegance, woven into every silhouette. Designed to move with you.
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- 4. HOW TO STYLE IT CAROUSEL -->
+    <div class="content-block">
+        <div class="section-title" style="margin-bottom: 5px;">Styling Notes</div>
+        <h2 class="font-serif" style="font-size: 18px; margin: 0 0 15px 0; font-weight: normal;">How to Style It</h2>
+
+        <div class="scroll-row" style="padding-left: 2px;">
+            {% for pairing in styling_pairings %}
+            <div class="style-card">
+                <div>
+                    <div class="style-header">
+                        <h3 class="style-name">{{ pairing.title }}</h3>
+                        <span class="style-mood">{{ pairing.mood }}</span>
+                    </div>
+                    <p class="style-desc">{{ pairing.desc }}</p>
+
+                    <div class="color-stack">
+                        {% for color in pairing.colors %}
+                        <div class="color-row">
+                            <span class="color-dot" style="background-color: {{ color.hex }};"></span>
+                            <span class="color-label">{{ color.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <a href="{{ pairing.link }}" class="style-link">Shop this pairing</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 5. CORE COLLECTION GRID -->
+    <div class="content-block">
+        <div class="grid-header">
+            <h2 class="grid-title">Core Collection</h2>
+            <a href="/shop/" class="grid-link">View all</a>
+        </div>
+        <div class="grid-2">
+            <div>
+                <div class="product-image-placeholder" style="background-color: #706867;"></div>
+                <p class="p-title" style="margin-top: 8px;">Cotton Ribbed Top</p>
+                <p class="p-price">$85</p>
+            </div>
+            <div>
+                <div class="product-image-placeholder" style="background-color: #706867;"></div>
+                <p class="p-title" style="margin-top: 8px;">Classic Linen Blazer</p>
+                <p class="p-price">$320</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. YOUR STORY UNDERLINE NOTE -->
+    <div class="content-block info-section">
+        <p class="info-eyebrow">Your Story, Your Way</p>
+        <p class="info-text">
+            Every woman wears Soloma differently. <a href="/journal/" class="info-link">Tell your story</a>
+        </p>
+    </div>
+
+    <!-- 7. NEED HELP PLAIN TEXT BLOCK (Strictly Aligned) -->
+    <div class="content-block info-section" style="margin-bottom: 30px;">
+        <h3 class="font-serif" style="font-size: 16px; margin: 0 0 6px 0; font-weight: normal; tracking-wide: 0.02em;">
+            Need
+            help?</h3>
+        <p class="info-text" style="max-width: 320px; margin: 0 0 16px 0; font-size: 12px; line-height: 1.5;">
+            Sizing, fabrics, or your order — our team replies Monday to Friday.
+        </p>
+        <div style="margin-top: 16px;">
+            <p class="info-eyebrow"
+                style="margin: 0 0 4px 0; font-size: 9px; text-transform: uppercase; color: #706867; letter-spacing: 0.15em; font-weight: 500;">
+                Email Us</p>
+            <a href="mailto:support@soloma.com" class="font-serif"
+                style="color: #403B3B; font-size: 15px; text-decoration: underline; tracking-wide: 0.05em;">
+                support@soloma.com
+            </a>
+        </div>
+    </div>
+
+    {% endblock %}

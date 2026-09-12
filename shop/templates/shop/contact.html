@@ -1,0 +1,451 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+    /* --- СТИЛИ СТРАНИЦЫ CONTACT --- */
+    .contact-container {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    /* Верхний блок */
+    .contact-header {
+        margin-bottom: 32px;
+        text-align: left;
+    }
+
+    .contact-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 24px;
+        color: #403B3B;
+        /* Deep Umbra */
+        margin: 0 0 6px 0;
+        font-weight: normal;
+    }
+
+    .contact-subtitle {
+        font-size: 12px;
+        color: #706867;
+        /* Umbra */
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* 1. Блок FAQ перед контактами */
+    .faq-preview-section {
+        margin-bottom: 40px;
+    }
+
+    .faq-section-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        border-bottom: 1px solid #E0E0DB;
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+    }
+
+    .faq-section-title {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        /* По исправленному инвертированному весу ТЗ */
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #403B3B;
+        margin: 0;
+    }
+
+    .faq-view-all-link {
+        font-size: 11px;
+        color: #706867;
+        text-decoration: underline;
+    }
+
+    /* Конструкция аккордеона без внешних зависимостей */
+    .accordion-item {
+        border-bottom: 1px solid #E0E0DB;
+    }
+
+    .accordion-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 14px 0;
+        text-align: left;
+        font-size: 13px;
+        color: #403B3B;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: normal;
+        /* Обычный вес по ТЗ */
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        font-size: 12px;
+        color: #706867;
+        line-height: 1.5;
+    }
+
+    .accordion-inner {
+        padding-bottom: 14px;
+        padding-left: 18px;
+        /* Выравнивание отступа 18px из ТЗ */
+    }
+
+    /* 2. Категоризированный список Email-адресов */
+    .email-channels-section {
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .channel-block {
+        text-align: left;
+    }
+
+    .channel-label {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #706867;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .channel-link {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 14px;
+        color: #403B3B;
+        text-decoration: underline;
+    }
+
+    .channel-hours {
+        font-size: 11px;
+        color: #706867;
+        margin: 2px 0 0 0;
+    }
+
+    /* 3. Форма обратной связи на тонких линиях (Макет 2) */
+    .message-form-section {
+        border-top: 1px solid #E0E0DB;
+        padding-top: 24px;
+        margin-bottom: 50px;
+    }
+
+    .form-divider-text {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #706867;
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+        text-align: left;
+    }
+
+    .form-label {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+        color: #403B3B;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .form-input-line {
+        width: 100%;
+        background: none;
+        border: none;
+        border-bottom: 1px solid #403B3B;
+        /* Тонкое подчеркивание вместо боксов по ТЗ */
+        padding: 4px 0;
+        font-size: 13px;
+        color: #403B3B;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    /* Отрегулированная кнопка отправки — border only, no fill */
+    .form-submit-btn {
+        width: 100%;
+        background-color: transparent;
+        color: #403B3B;
+        border: 1px solid #403B3B;
+        padding: 12px 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background-color 0.2s;
+    }
+
+    /* 4. Блок отзывов社区 "Stories from Soloma Women" (Макет 3) */
+    .ugc-section {
+        border-top: 1px solid #E0E0DB;
+        padding-top: 32px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .ugc-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 18px;
+        color: #403B3B;
+        margin: 0 0 4px 0;
+        font-weight: normal;
+    }
+
+    .ugc-subtitle {
+        font-size: 11px;
+        color: #706867;
+        margin: 0 0 20px 0;
+    }
+
+    /* Скролл-карусель отзывов */
+    .ugc-carousel {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 16px;
+    }
+
+    .ugc-carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ugc-card {
+        width: 68%;
+        flex-shrink: 0;
+    }
+
+    .ugc-image-placeholder {
+        width: 100%;
+        aspect-ratio: 1/1;
+        /* Квадратное соотношение по макету */
+        background-color: #706867;
+        border-radius: 2px;
+        margin-bottom: 12px;
+    }
+
+    .ugc-quote {
+        font-size: 12px;
+        color: #403B3B;
+        line-height: 1.5;
+        margin: 0 0 12px 0;
+        font-style: normal;
+    }
+
+    .ugc-author {
+        font-size: 11px;
+        font-weight: 600;
+        color: #403B3B;
+        margin: 0 0 2px 0;
+    }
+
+    .ugc-product-link {
+        font-size: 11px;
+        color: #706867;
+        text-decoration: underline;
+    }
+
+    /* Нижний тег инстаграма */
+    .instagram-teaser-block {
+        margin-top: 20px;
+        font-size: 11px;
+        color: #706867;
+        line-height: 1.5;
+    }
+
+    .instagram-teaser-block a {
+        color: #403B3B;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    /* --- DESKTOP ADAPTIVE OVERRIDES --- */
+    @media (min-width: 768px) {
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .contact-title {
+            font-size: 32px;
+        }
+
+        .email-channels-section {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .ugc-carousel {
+            overflow-x: visible;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .ugc-card {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="contact-container">
+
+    <!-- Заголовок страницы -->
+    <header class="contact-header">
+        <h1 class="contact-title">Let's talk</h1>
+        <p class="contact-subtitle">For any question, please reach out below or submit a message.</p>
+    </header>
+
+    <!-- 1. БЛОК FAQ PREVIEW -->
+    <section class="faq-preview-section">
+        <div class="faq-section-title-row">
+            <h2 class="faq-section-title">Before You Reach Out</h2>
+            <a href="/customer-care/" class="faq-view-all-link">View all FAQs</a>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>What's your return policy?</span> <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-inner">
+                    Unworn, unwashed items with tags attached can be returned within 30 days.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>How long does shipping take?</span> <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-inner">
+                    Standard shipping is 5–7 business days. Expedited options are available at checkout.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>How do I track my order?</span> <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-inner">
+                    You'll get a confirmation email with tracking as soon as your order ships.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. EMAIL СПИСОК -->
+    <section class="email-channels-section">
+        <div class="channel-block">
+            <div class="channel-label">General Inquiries</div>
+            <a href="mailto:hello@soloma.com" class="channel-link">hello@soloma.com</a>
+        </div>
+        <div class="channel-block">
+            <div class="channel-label">Order Inquiries</div>
+            <a href="mailto:orders@soloma.com" class="channel-link">orders@soloma.com</a>
+            <p class="channel-hours">Monday–Friday, 10am–5:30pm ET</p>
+        </div>
+    </section>
+
+    <!-- 3. ФОРМА ОБРАТНОЙ СВЯЗИ -->
+    <section class="message-form-section">
+        <div class="form-divider-text">Or send a message</div>
+        <form action="#" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" placeholder="Jane Doe" class="form-input-line" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" placeholder="jane@email.com" class="form-input-line" required>
+            </div>
+
+            <!-- Message Input Group -->
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <input type="text" name="message" placeholder="How can we help?" class="form-input-line" required>
+            </div>
+
+            <!-- Submit Button — Border only, no fill -->
+            <button type="submit" class="form-submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- 4. STORIES FROM SOLOMA WOMEN (UGC Section) -->
+    <section class="ugc-section">
+        <h2 class="ugc-title">Stories from Soloma Women</h2>
+        <p class="ugc-subtitle">Real moments from the #MySolomaStory community.</p>
+
+        <div class="ugc-carousel">
+            <!-- Review 1 -->
+            <div class="ugc-card">
+                <div class="ugc-image-placeholder"></div>
+                <p class="ugc-quote">"My Soloma trench coat is my go-to — polished, no matter the weather."</p>
+                <p class="ugc-author">Elena S.</p>
+                <a href="/product/trench-coat/" class="ugc-product-link">Shop the trench</a>
+            </div>
+            <!-- Review 2 -->
+            <div class="ugc-card">
+                <div class="ugc-image-placeholder"></div>
+                <p class="ugc-quote">"The linen sets are incredibly comfortable and effortless."</p>
+                <p class="ugc-author">Sarah T.</p>
+                <a href="/product/linen-set/" class="ugc-product-link">Shop linen</a>
+            </div>
+        </div>
+
+        <!-- Instagram Teaser -->
+        <div class="instagram-teaser-block">
+            <span
+                style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; display: block; margin-bottom: 2px; font-weight: 500;">#MySolomaStory</span>
+            Tag @SolomaOfficial on Instagram to be featured here. <a href="https://instagram.com" target="_blank">Share
+                your story</a>
+        </div>
+    </section>
+
+</div>
+
+<!-- Interactive Accordion JavaScript Logic -->
+<script>
+    function toggleAccordion(element) {
+        var content = element.nextElementSibling;
+        var icon = element.querySelector('span:last-child');
+
+        if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+            content.style.maxHeight = "0px";
+            icon.textContent = "+";
+        } else {
+            // Closes any other open tabs for clean minimalist UX
+            var allContents = document.querySelectorAll('.accordion-content');
+            var allIcons = document.querySelectorAll('.accordion-trigger span:last-child');
+            allContents.forEach(function (item) {item.style.maxHeight = "0px";});
+            allIcons.forEach(function (item) {item.textContent = "+";});
+
+            // Opens current clicked tab safely
+            content.style.maxHeight = content.scrollHeight + "px";
+            icon.textContent = "−";
+        }
+    }
+</script>
+{% endblock %}

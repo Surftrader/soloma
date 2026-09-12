@@ -1,0 +1,172 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+    /* --- СТИЛИ СТРАНИЦЫ JOURNAL INDEX --- */
+    .journal-container {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    .journal-header {
+        margin-bottom: 32px;
+        text-align: left;
+    }
+
+    .journal-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 24px;
+        color: #403B3B;
+        /* Deep Umbra */
+        margin: 0 0 6px 0;
+        font-weight: normal;
+        letter-spacing: 0.02em;
+    }
+
+    .journal-subtitle {
+        font-size: 12px;
+        color: #706867;
+        /* Umbra */
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Архитектура списка статей */
+    .journal-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .journal-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 24px 0;
+        border-top: 1px solid #E0E0DB;
+        /* Тонкие разделительные линии по макету */
+        text-decoration: none;
+        color: #403B3B;
+    }
+
+    .journal-row:last-child {
+        border-bottom: 1px solid #E0E0DB;
+        /* Нижнее замыкание списка перед футером */
+    }
+
+    /* Квадратное превью изображения слева */
+    .journal-preview-box {
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+        background-color: #706867;
+        /* Исходная заглушка, заменяемая на image.url */
+        border-radius: 2px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Текстовый контент справа */
+    .journal-meta-box {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        gap: 4px;
+    }
+
+    .journal-location {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 500;
+        color: #706867;
+        /* Umbra */
+    }
+
+    .journal-row-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 14px;
+        color: #403B3B;
+        margin: 0;
+        line-height: 1.3;
+        font-weight: normal;
+    }
+
+    .journal-style-note {
+        font-size: 11px;
+        color: #706867;
+        margin-top: 2px;
+    }
+
+    /* --- DESKTOP ADAPTIVE OVERRIDES --- */
+    @media (min-width: 768px) {
+        .journal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .journal-title {
+            font-size: 32px;
+        }
+
+        .journal-row {
+            padding: 32px 0;
+            gap: 24px;
+        }
+
+        .journal-preview-box {
+            width: 110px;
+            height: 110px;
+        }
+
+        .journal-row-title {
+            font-size: 18px;
+        }
+    }
+</style>
+
+<div class="journal-container">
+
+    <!-- Верхний блок страницы -->
+    <header class="journal-header">
+        <h1 class="journal-title">The Journal</h1>
+        <p class="journal-subtitle">Styling stories from Soloma — one pairing, one city, one way to wear it.</p>
+    </header>
+
+    <!-- Сетка списка историй строго по скриншоту -->
+    <div class="journal-list">
+
+        <!-- История 1: Лиссабон -->
+        <a href="/journal/lisbon/" class="journal-row">
+            <div class="journal-preview-box" style="background-color: #C39C7F;"></div>
+            <div class="journal-meta-box">
+                <span class="journal-location">Lisbon, Early Morning</span>
+                <h2 class="journal-row-title">A quiet hour before the city wakes.</h2>
+                <span class="journal-style-note">Subtle Luxury — Beige + Grey</span>
+            </div>
+        </a>
+
+        <!-- История 2: Нью-Йорк -->
+        <a href="/journal/new-york/" class="journal-row">
+            <div class="journal-preview-box" style="background-color: #403B3B;"></div>
+            <div class="journal-meta-box">
+                <span class="journal-location">New York, Dusk</span>
+                <h2 class="journal-row-title">The city exhales at six o'clock.</h2>
+                <span class="journal-style-note">Bold Contrast — Misty + Black</span>
+            </div>
+        </a>
+
+        <!-- История 3: Львов -->
+        <a href="/journal/lviv/" class="journal-row">
+            <div class="journal-preview-box" style="background-color: #E0E0DB;"></div>
+            <div class="journal-meta-box">
+                <span class="journal-location">Lviv, Coffee Hour</span>
+                <h2 class="journal-row-title">Where the linen is grown, this is how she wears it.</h2>
+                <span class="journal-style-note">Urban Serenity — Beige + Misty</span>
+            </div>
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}

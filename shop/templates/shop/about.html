@@ -1,0 +1,203 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+    /* --- СТИЛИ СТОРІНКИ ABOUT --- */
+    .about-container {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    /* 1. Блок Hero із вбудованим текстом */
+    .about-hero {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        background-color: #E0E0DB;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 32px;
+    }
+
+    .about-hero-image {
+        width: 100%;
+        height: 100%;
+        background-image: url('https://unsplash.com');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .about-hero-text {
+        position: absolute;
+        bottom: 30px;
+        left: 20px;
+        right: 20px;
+        color: #F4F2EF;
+        /* Світлий текст Shovk поверх темнішої зони фото */
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: normal;
+    }
+
+    /* 2. Блок Візії / Цитати */
+    .vision-section {
+        margin-bottom: 44px;
+        text-align: left;
+    }
+
+    .vision-eyebrow {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #706867;
+        /* Umbra */
+        margin-bottom: 16px;
+        font-weight: 500;
+    }
+
+    .vision-text {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #403B3B;
+        /* Deep Umbra */
+        margin: 0 0 16px 0;
+    }
+
+    /* 3. Блок "Threads of Our Journey" */
+    .journey-section {
+        margin-bottom: 44px;
+    }
+
+    .journey-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        color: #403B3B;
+        margin: 0 0 16px 0;
+        font-weight: normal;
+        letter-spacing: 0.02em;
+    }
+
+    .journey-image-box {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background-color: #706867;
+        border-radius: 2px;
+        margin-bottom: 16px;
+    }
+
+    .journey-text {
+        font-size: 12px;
+        color: #706867;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* 4. Фінальний тихий блок СТА згідно з макетом 3 */
+    .cta-section {
+        border-top: 1px solid #E0E0DB;
+        padding-top: 32px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .cta-eyebrow {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #706867;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+
+    .cta-text {
+        font-size: 12px;
+        color: #706867;
+        margin: 0;
+    }
+
+    .cta-link {
+        color: #403B3B;
+        font-weight: 500;
+        text-decoration: underline;
+        margin-left: 2px;
+    }
+
+    /* --- АДАПТИВНІ СТИЛІ ДЛЯ ДЕСКТОПУ --- */
+    @media (min-width: 768px) {
+        .about-container {
+            max-width: 800px;
+            /* Затискаємо контентну журнальну статтю для зручності читання на ПК */
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .about-hero {
+            height: 50vh;
+            aspect-ratio: auto;
+        }
+
+        .about-hero-text {
+            font-size: 26px;
+            left: 40px;
+            bottom: 40px;
+        }
+
+        .vision-text {
+            font-size: 17px;
+        }
+
+        .journey-title {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<div class="about-container">
+
+    <!-- 1. HERO BANNER -->
+    <section class="about-hero">
+        <div class="about-hero-image"></div>
+        <div class="about-hero-text">
+            Tell the story.<br>Wear the story.<br>Be the story.
+        </div>
+    </section>
+
+    <!-- 2. THE VISION BEHIND SOLOMA -->
+    <section class="vision-section">
+        <div class="vision-eyebrow">The Vision Behind Soloma</div>
+        <p class="vision-text">
+            "Soloma exists for a woman on the go — the one moving between a boardroom, a school pickup, dinner with
+            friends, who needs clothes that move as freely as she does. Real pockets. Fabric that doesn't wrinkle in a
+            bag. Nothing that requires a change of shoes."
+        </p>
+        <p class="vision-text">
+            "These are clothes for a life that doesn't pause for a wardrobe change — meant to be lived in, unbound by a
+            single occasion, packed for a trip without a second thought, worn until they belong to your own story rather
+            than someone else's trend."
+        </p>
+    </section>
+
+    <!-- 3. THREADS OF OUR JOURNEY -->
+    <section class="journey-section">
+        <h2 class="journey-title">Threads of Our Journey</h2>
+        <div class="journey-image-box">
+            <!-- Зображення процесу виробництва -->
+        </div>
+        <p class="journey-text">
+            Soloma sources with intention — fabric and craftsmanship from Japan, Italy, Ukraine, and Mongolia. Nothing
+            synthetic, nothing rushed.
+        </p>
+    </section>
+
+    <!-- 4. READY TO WEAR THE STORY CTA -->
+    <section class="cta-section">
+        <div class="cta-eyebrow">Ready to wear the story?</div>
+        <p class="cta-text">
+            Explore the full collection. <a href="{% url 'shop:catalog' %}" class="cta-link">Shop the Collection</a>
+        </p>
+    </section>
+
+</div>
+{% endblock %}
