@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,6 +85,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Если проект запущен на Heroku, переключаемся на PostgreSQL
+db_from_env = dj_database_url.config(conn_max_age=600)
+if db_from_env:
+    DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -130,3 +137,11 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Настройка WhiteNoise для сжатия файлов
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
