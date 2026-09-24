@@ -1,6 +1,8 @@
 {% extends 'shop/base.html' %}
 
 {% block content %}
+{% load static %}
+
 <style>
     /* --- COMMON MOBILE STYLES (Default layout) --- */
     .promo-strip {
@@ -354,24 +356,39 @@
     20% OFF your first order — join the Soloma family
 </div>
 
-<div class="container-fluid" style="margin-top: 20px;">
 
-    <!-- 1. HERO MAIN SECTION -->
-    <div class="content-block">
-        <div class="hero-container">
-            <div class="hero-image"></div>
-            <a href="{% url 'shop:catalog' %}" class="hero-btn">Shop New Arrivals</a>
-        </div>
-        <h1 class="hero-tagline">
-            Tell the story. Wear the story.<br>Be the story.
-        </h1>
+
+<!-- 1. HERO MAIN SECTION -->
+{% comment %} <div class="content-block">
+    <div class="hero-container">
+        <div class="hero-image" style="background-image: url('{% static 'shop/images/hero-max-1440.webp' %}');"></div>
+        <a href="{% url 'shop:catalog' %}" class="hero-btn">Shop New Arrivals</a>
+    </div>
+    <h1 class="hero-tagline">
+        Tell the story. Wear the story.<br>Be the story.
+    </h1>
+</div> {% endcomment %}
+<div class="content-block" style="margin-bottom: 40px;">
+    <div class="hero-container" style="border-radius: 0; margin: 0;"> <!-- Убираем скругления и внешние отступы -->
+        <div class="hero-image" style="background-image: url('{% static 'shop/images/hero-max-1440.webp' %}');"></div>
+        <a href="/shop/" class="hero-btn">Shop New Arrivals</a>
+    </div>
+</div>
+
+{% comment %} <div class="container-fluid" style="margin-top: 20px;"> {% endcomment %}
+    <div class="container-fluid">
+    <!-- 2. CASHMERE COLLECTION CAROUSEL / GRID -->
+    {% comment %} <div class="content-block"> {% endcomment %}
+        {% comment %} <div class="section-title">
+            The Cashmere Story, <span>woven in Mongolia</span>
+        </div> {% endcomment %}
+        <!-- Left-aligned editorial brand tagline typography -->
+    <div class="content-block" style="margin-top: 24px; margin-bottom: 50px;">
+        <h2 class="hero-tagline" style="margin: 0; font-size: 22px; tracking-wide: 0.02em;">
+            <span>Tell the story. Wear the story.</span> <span>Be the story.</span>
+        </h2>
     </div>
 
-    <!-- 2. CASHMERE COLLECTION CAROUSEL / GRID -->
-    <div class="content-block">
-        <div class="section-title">
-            The Cashmere Story, <span>woven in Mongolia</span>
-        </div>
         <div class="scroll-row">
             <div class="product-card-scroll">
                 <div class="product-image-placeholder"></div>
